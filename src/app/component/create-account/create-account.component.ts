@@ -21,6 +21,7 @@ export class CreateAccountComponent {
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      passwordConfirmation: ['', [Validators.required, Validators.minLength(6)]]
 
     })
   }
@@ -29,20 +30,27 @@ export class CreateAccountComponent {
 
   onSubmit(): void {
     if (this.accountForm.valid) {
-      
-      const user: User = this.accountForm.value;
 
-      this.userService.createUser(this.accountForm.value).subscribe({
-        next: () => {
-          alert('user created');
-          this.router.navigate(['/login'])
-        },
-        error: (err) => {
-          console.error('error creating user: ', err);
-          alert('Failed to create user')
-        }
-      })
+      const password: String = this.accountForm.value.password
+      const passwordConfirmation: String = this.accountForm.value.passwordConfirmation
+
+      if (password === passwordConfirmation) {
+
+        const user: User = this.accountForm.value;
+
+        this.userService.createUser(this.accountForm.value).subscribe({
+          next: () => {
+            this.router.navigate(['/login'])
+          },
+          error: (err) => {
+            console.error('error creating user: ', err);
+          }
+        })
+      } else {
+        console.error('passwords do not match')
+      }
     }
+      
   }
 
 }
