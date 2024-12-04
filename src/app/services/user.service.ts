@@ -7,6 +7,7 @@ export interface User {
   firstName: string;
   lastName: string;
   password: string;
+  passwordConfirmation: string;
   email: string; 
 }
 
@@ -22,4 +23,7 @@ export class UserService {
   createUser(user: User): Observable<void> {
     return this.http.post<void>(`${this.API_URL}/create`, user)
   }
+
+  
+  
 }

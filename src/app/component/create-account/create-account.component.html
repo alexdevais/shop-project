@@ -18,6 +18,9 @@
                     />
                     <label class="form-label" for="form3Example1">First name</label>
                   </div>
+                  <div *ngIf="accountForm.get('firstName')?.hasError('required') && accountForm.get('firstName')?.touched && accountForm.dirty" class="text-danger">
+                    First name is required.
+                  </div>
                 </div>
                 <div class="col">
                   <div data-mdb-input-init class="form-outline">
@@ -28,6 +31,9 @@
                       formControlName="lastName"
                     />
                     <label class="form-label" for="form3Example2">Last name</label>
+                    <div *ngIf="accountForm.get('lastName')?.hasError('required') && accountForm.get('lastName')?.touched && accountForm.dirty" class="text-danger">
+                      Last name is required.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -41,6 +47,13 @@
                   formControlName="email"
                 />
                 <label class="form-label" for="form3Example3">Email address</label>
+                <div *ngIf="accountForm.get('email')?.hasError('required') && accountForm.get('email')?.touched && accountForm.dirty" class="text-danger">
+                  Email is required.
+                </div>
+
+                <div *ngIf="emailError && accountForm.get('email')?.touched && accountForm.get('email')?.value && accountForm.dirty" class="text-danger">
+                  {{ emailError }}
+                </div>
               </div>
 
               <!-- Password Input -->
@@ -52,7 +65,11 @@
                   formControlName="password"
                 />
                 <label class="form-label" for="form3Example4">Password</label>
+                <div *ngIf="accountForm.get('password')?.hasError('required') && accountForm.get('password')?.touched" class="text-danger">
+                  Password is required.
+                </div>
               </div>
+              
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
                   type="password"
@@ -61,7 +78,13 @@
                   formControlName="passwordConfirmation"
                 />
                 <label class="form-label" for="form3Example4">Password confirmation</label>
+                <div *ngIf="accountForm.hasError('passwordMismatch') && accountForm.touched" class="text-danger">
+                  Passwords do not match.
+                </div>
               </div>
+              
+            
+              
 
               <!-- Submit button -->
               <button
@@ -72,6 +95,7 @@
               >
                 Sign up
               </button>
+              
 
               <!-- Login button -->
               <button
