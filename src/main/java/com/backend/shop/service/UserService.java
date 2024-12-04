@@ -1,6 +1,8 @@
 package com.backend.shop.service;
 
+import com.backend.shop.DTO.RegistrationRequest;
 import com.backend.shop.entity.User;
+import com.backend.shop.enums.UserRole;
 import com.backend.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,12 +24,34 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void createUser(User user) {
+    public void createUser(RegistrationRequest registrationRequest) {
 
-        String hashPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashPassword);
+        System.out.println("Password: " + registrationRequest.getPassword());
+        System.out.println("Confirmation Password: " + registrationRequest.getPasswordConfirmation());
+
+        if (userRepository.existsByEmail(registrationRequest.getEmail())) {
+            throw new IllegalArgumentException(("Email already in use"));
+        }
+
+        if (!registrationRequest.getPassword().equals(registrationRequest.getPasswordConfirmation())) {
+            throw new IllegalArgumentException("Passwords do not match");
+        }
+
+        User user = new User();
+        user.setFirstName(registrationRequest.getFirstName());
+        user.setLastName(registrationRequest.getLastName());
+        user.setEmail(registrationRequest.getEmail());
+
+        String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
+        user.setPassword(hashedPassword);
+
+        user.setUserRole(UserRole.OWNER);
+
+
         this.userRepository.save(user);
+
     }
+
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
