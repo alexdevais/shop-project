@@ -34,4 +34,16 @@ public class GlobalExceptionsHandler {
     public Map<String, String> handleGenericException (Exception exception) {
         return Map.of("error", exception.getMessage());
     }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handlePasswordMismatchException(PasswordMismatchException exception) {
+        return Map.of("error", exception.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleDuplicateEmailException(DuplicateEmailException exception) {
+        return Map.of("error", exception.getMessage());
+    }
 }
