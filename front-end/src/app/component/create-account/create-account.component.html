@@ -1,0 +1,92 @@
+<section class="vh-100" style="background-color: #508bfc;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-lg" style="border-radius: 1rem;">
+          <div class="card-body p-5">
+            <h3 class="mb-4 text-center">Sign Up</h3>
+            <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+              <!-- First and Last Name Inputs -->
+              <div class="row mb-4">
+                <div class="col">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      type="text"
+                      id="form3Example1"
+                      class="form-control"
+                      formControlName="firstName"
+                    />
+                    <label class="form-label" for="form3Example1">First name</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div data-mdb-input-init class="form-outline">
+                    <input
+                      type="text"
+                      id="form3Example2"
+                      class="form-control"
+                      formControlName="lastName"
+                    />
+                    <label class="form-label" for="form3Example2">Last name</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email Input -->
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="email"
+                  id="form3Example3"
+                  class="form-control"
+                  formControlName="email"
+                />
+                <label class="form-label" for="form3Example3">Email address</label>
+              </div>
+
+              <!-- Password Input -->
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="password"
+                  id="form3Example4"
+                  class="form-control"
+                  formControlName="password"
+                />
+                <label class="form-label" for="form3Example4">Password</label>
+              </div>
+
+              <!-- Password confirmation -->
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="password"
+                  id="form3Example4"
+                  class="form-control"
+                  formControlName="passwordConfirmation"
+                />
+                <label class="form-label" for="form3Example4">Password</label>
+              </div>
+
+              <!-- Submit button -->
+              <button
+                data-mdb-ripple-init
+                type="submit"
+                class="btn btn-primary btn-block mb-4"
+                [disabled]="accountForm.invalid"
+              >
+                Sign up
+              </button>
+
+              <!-- Login button -->
+              <button
+                data-mdb-ripple-init
+                class="btn btn-warning btn-block mb-4 ms-3"
+                routerLink="/login"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
