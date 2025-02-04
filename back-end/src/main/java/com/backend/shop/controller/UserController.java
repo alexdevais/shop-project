@@ -29,9 +29,9 @@ public class UserController {
             this.userService.createUser(registrationRequest);
 
             RegistrationResponse registrationResponse = new RegistrationResponse(
-                    registrationRequest.getFirstName(),
-                    registrationRequest.getLastName().toUpperCase(),
-                    registrationRequest.getEmail()
+                    registrationRequest.firstName(),
+                    registrationRequest.lastName().toUpperCase(),
+                    registrationRequest.email()
             );
 
             Map<String, Object> response = Map.of(
