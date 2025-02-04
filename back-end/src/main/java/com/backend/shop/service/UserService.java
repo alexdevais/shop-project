@@ -8,8 +8,6 @@ import com.backend.shop.exceptions.PasswordMismatchException;
 import com.backend.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +25,20 @@ public class UserService {
 
     public void createUser(RegistrationRequest registrationRequest) {
 
-        if (userRepository.existsByEmail(registrationRequest.getEmail())) {
+        if (userRepository.existsByEmail(registrationRequest.email())) {
             throw new DuplicateEmailException(("Email already in use"));
         }
 
-        if (!registrationRequest.getPassword().equals(registrationRequest.getPasswordConfirmation())) {
+        if (!registrationRequest.password().equals(registrationRequest.passwordConfirmation())) {
             throw new PasswordMismatchException("Passwords do not match");
         }
 
         User user = new User();
-        user.setFirstName(registrationRequest.getFirstName());
-        user.setLastName(registrationRequest.getLastName().toUpperCase());
-        user.setEmail(registrationRequest.getEmail());
+        user.setFirstName(registrationRequest.firstName());
+        user.setLastName(registrationRequest.lastName().toUpperCase());
+        user.setEmail(registrationRequest.email());
 
-        String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
+        String hashedPassword = passwordEncoder.encode(registrationRequest.password());
         user.setPassword(hashedPassword);
 
         user.setUserRole(UserRole.OWNER);

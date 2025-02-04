@@ -24,6 +24,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if(this.loginForm.valid) {
+      
       const user: User = this.loginForm.value;
 
       this.userService.login(user).subscribe({
