@@ -1,11 +1,11 @@
 package com.backend.shop.service;
 
 import com.backend.shop.dto.LoginRequest;
+import com.backend.shop.dto.LoginResponse;
 import com.backend.shop.entity.User;
 import com.backend.shop.repository.UserRepository;
-import com.backend.shop.util.JwtTokenUtil;
+import com.backend.shop.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,43 +16,29 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-/*
-    private final JwtTokenUtil jwtTokenUtil;
-*/
-
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenUtil jwtTokenUtil) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-  /*      this.jwtTokenUtil = jwtTokenUtil;*/
+        this.jwtUtil = jwtUtil;
+
     }
 
-/*    public String authenticate(LoginRequest loginRequest) {
-
+    public LoginResponse authenticate(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())){
+        boolean isPasswordValid = passwordEncoder.matches(loginRequest.password(), user.getPassword());
+
+        if (!isPasswordValid) {
             throw new RuntimeException("Invalid credentials");
         }
 
+        String token = jwtUtil.generateToken(user.getEmail());
+        System.out.println("Generated Token: " + token);
 
-        return jwtTokenUtil.generateToken(user);
-    }*/
-
-    public Map<String, Object> authenticate(LoginRequest loginRequest) {
-        User user = userRepository.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
-
-        return Map.of(
-                "message", "Login successful",
-                "email", user.getEmail(),
-                "username", user.getUsername()
-        );
+        return new LoginResponse("Login successful", token, user.getEmail(), user.getUsername());
     }
 }

@@ -6,7 +6,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-  security:
-    jwt:
-      secret-key: ${SECRET_KEY}
-      expiration: ${EXPIRATION}
