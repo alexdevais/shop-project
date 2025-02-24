@@ -29,9 +29,6 @@ public class Shop {
     @Column(nullable = false, length = 5)
     private Integer postalCode;
 
-    @Column(nullable = false, length = 50)
-    private String country;
-
     @OneToOne(mappedBy = "shop")
     private Inventory inventory;
 
@@ -51,12 +48,11 @@ public class Shop {
     public Shop() {
     }
 
-    public Shop(String name, String city, String address, Integer postalCode, String country, User owner) {
+    public Shop(String name, String city, String address, Integer postalCode, User owner) {
         this.name = name;
         this.city = city;
         this.address = address;
         this.postalCode = postalCode;
-        this.country = country;
         this.owner = owner;
     }
 }

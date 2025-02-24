@@ -30,7 +30,7 @@ public class UserFactory {
         String password = this.passwordEncoder.encode(faker.internet().password());
 
         User user = new User(firstName, lastName, email, password);
-        user.setUserRole(UserRole.OWNER);
+        user.setUserRole(UserRole.USER);
 
         userRepository.save(user);
     }

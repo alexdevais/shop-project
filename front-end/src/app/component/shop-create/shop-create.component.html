@@ -1,0 +1,45 @@
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h3 class="mb-5">Create Shop</h3>
+  
+              <form [formGroup]="shopForm" (ngSubmit)="onSubmit()">
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="shopName" class="form-control form-control-lg" formControlName="name" />
+                  <label class="form-label" for="shopName">Shop Name</label>
+                </div>
+                
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="shopCity" class="form-control form-control-lg" formControlName="city" />
+                  <label class="form-label" for="shopCity">City</label>
+                </div>
+                
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="shopAddress" class="form-control form-control-lg" formControlName="address" />
+                  <label class="form-label" for="shopAddress">Address</label>
+                </div>
+                
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="shopPostalCode" class="form-control form-control-lg" formControlName="postalCode" />
+                  <label class="form-label" for="shopPostalCode">Postal Code</label>
+                </div>
+                
+  
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Create Shop</button>
+  
+                <hr class="my-4">
+              </form>
+  
+              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-warning" routerLink="/dashboard">Go to Dashboard</button>
+              <button class="btn btn-primary" routerLink="/login">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
