@@ -10,6 +10,10 @@ export interface User {
   email: string; 
 }
 
+export interface AuthResponse {
+  token: string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +28,24 @@ export class UserService {
     return this.http.post<void>(`${this.API_URL_USER}/create`, user)
   }
 
-  login(user: User): Observable<void> {
-    return this.http.post<void>(`${this.API_URL_AUTH}/login`, user)
+  login(user: User): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.API_URL_AUTH}/login`, user)
+  }
+
+  storeToken(authResponse: AuthResponse): void {
+    localStorage.setItem('token', authResponse.token)
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token')
+  }
+
+  logout(): void {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
   }
 }
