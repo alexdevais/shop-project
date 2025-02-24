@@ -1,8 +1,7 @@
 package com.backend.shop.config;
 
-import com.backend.shop.filter.JwtAuthenticationFilter;
+import com.backend.shop.security.JwtAuthenticationFilter;
 import com.backend.shop.service.CustomUserDetailsService;
-import com.backend.shop.util.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,13 +27,11 @@ import java.util.List;
 public class WebSecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
-/*    private final JwtTokenUtil jwtTokenUtil;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;*/
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.customUserDetailsService = customUserDetailsService;
- /*       this.jwtTokenUtil = jwtTokenUtil;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;*/
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -49,9 +45,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/user/create")
                         .permitAll()
                         .anyRequest().authenticated()))
-/*
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-*/
                 .formLogin(AbstractAuthenticationFilterConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(LogoutConfigurer::permitAll);
