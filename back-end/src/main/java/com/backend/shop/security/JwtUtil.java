@@ -10,9 +10,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-
     private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long EXPIRATION = 3600L;
+    private final long EXPIRATION = 3600_000L; // 1 hour in milliseconds
 
     private Key getSigningKey() {
         return SECRET_KEY;
@@ -28,12 +27,16 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid token: " + e.getMessage());
+        }
     }
 
     public boolean validateToken(String token, String username) {
@@ -41,12 +44,16 @@ public class JwtUtil {
     }
 
     private boolean isTokenExpired(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration()
-                .before(new Date());
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getExpiration()
+                    .before(new Date());
+        } catch (JwtException e) {
+            return true;
+        }
     }
 }
