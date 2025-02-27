@@ -4,6 +4,7 @@ import com.backend.shop.dto.ShopRequest;
 import com.backend.shop.dto.ShopResponse;
 import com.backend.shop.entity.Shop;
 import com.backend.shop.entity.User;
+import com.backend.shop.enums.UserRole;
 import com.backend.shop.repository.ShopRepository;
 import com.backend.shop.repository.UserRepository;
 import com.backend.shop.security.JwtUtil;
@@ -11,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class ShopService {
@@ -34,6 +34,7 @@ public class ShopService {
 
             User owner = userRepository.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("User not found"));
+            owner.setUserRole(UserRole.OWNER);
 
             Shop shop = new Shop();
             shop.setName(shopRequest.name());

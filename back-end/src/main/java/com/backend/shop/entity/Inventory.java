@@ -2,13 +2,9 @@ package com.backend.shop.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "inventory")
 public class Inventory {
@@ -24,4 +20,27 @@ public class Inventory {
     @OneToMany(mappedBy = "inventory")
     private List<Product> products;
 
+    public Long getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(Long inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

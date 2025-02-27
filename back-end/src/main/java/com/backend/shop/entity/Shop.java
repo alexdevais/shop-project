@@ -1,14 +1,10 @@
 package com.backend.shop.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 
-@Setter
-@Getter
 @Entity
 @Table(name = "shop")
 public class Shop {
@@ -54,5 +50,69 @@ public class Shop {
         this.address = address;
         this.postalCode = postalCode;
         this.owner = owner;
+    }
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public List<User> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<User> employees) {
+        this.employees = employees;
     }
 }
